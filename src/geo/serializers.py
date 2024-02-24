@@ -70,3 +70,29 @@ class WeatherSerializer(serializers.ModelSerializer):
             "timezone",
             "city",
         ]
+
+
+class CurrencySerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для данных о валюте.
+    """
+
+    class Meta:
+        model = Currency
+        fields = [
+            "id",
+            "base",
+            "date",
+        ]
+
+
+class CurrencyRatesSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для данных о курсе валют.
+    """
+
+    currency = CurrencySerializer(read_only=True)
+
+    class Meta:
+        model = CurrencyRates
+        fields = ["id", "currency_name", "rate", "currency"]

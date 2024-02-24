@@ -8,6 +8,7 @@ import httpx
 
 from app.settings import REQUESTS_TIMEOUT, API_KEY_APILAYER
 from base.clients.base import BaseClient
+from geo.clients.shemas import CurrencyRatesDTO
 
 
 class CurrencyClient(BaseClient):
@@ -31,7 +32,7 @@ class CurrencyClient(BaseClient):
 
             return None
 
-    def get_rates(self, base: str = "rub") -> Optional[dict]:
+    def get_rates(self, base: str = "rub") -> CurrencyRatesDTO | None:
         """
         Получение данных о курсах валют.
 
@@ -39,6 +40,11 @@ class CurrencyClient(BaseClient):
         :return:
         """
 
-        return self._request(
-            f"{self.get_base_url()}?base={base}"
+        data = self._request(f"{self.get_base_url()}?base={base}")
+        if not data:
+            return None
+        return CurrencyRatesDTO(
+            base=data["base"],
+            date=data["date"],
+            rates=data["rates"]
         )

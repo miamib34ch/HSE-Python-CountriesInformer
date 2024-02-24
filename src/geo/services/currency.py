@@ -12,19 +12,33 @@ class CurrencyService:
     Сервис для работы с данными о валютах.
     """
 
-    def get_currency(self, currency_base: str) -> Optional[dict]:
+    def get_currency(self, currency_base: str) -> QuerySet[CurrencyRates]:
         """
         Получение валюты по названию.
-
         :param str currency_base: название валюты
-
         :return:
         """
 
-        if data := CurrencyClient().get_rates(f"{currency_base}"):
-            return data
-
-        return None
+        currency_rates = CurrencyRates.objects.filter(
+            Q(currency__base__contains=currency_base)
+        )
+        if not currency_rates:
+            if currency_data := CurrencyClient().get_rates(currency_base):
+                currency = Currency.objects.create(
+                    base=currency_data.base,
+                    date=currency_data.date,
+                )
+                CurrencyRates.objects.bulk_create(
+                    [
+                        self.build_model_rates(currency, name, rate)
+                        for name, rate in currency_data.rates.items()
+                    ],
+                    batch_size=1000,
+                )
+                currency_rates = CurrencyRates.objects.filter(
+                    Q(currency__base__contains=currency.base)
+                )
+        return currency_rates
 
     def build_model_rates(
         self, currency: Currency, name: str, rate: float
