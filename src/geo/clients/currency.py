@@ -44,7 +44,5 @@ class CurrencyClient(BaseClient):
         if not data:
             return None
         return CurrencyRatesDTO(
-            base=data["base"],
-            date=data["date"],
-            rates=data["rates"]
+            base=data["base"], date=data["date"], rates=data["rates"]
         )

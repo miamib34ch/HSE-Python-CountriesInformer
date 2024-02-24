@@ -1,5 +1,5 @@
 from typing import Optional
-from django.db.models import Q, QuerySet
+from django.db.models import Q
 
 from geo.clients.shemas import WeatherInfoDTO
 from geo.clients.weather import WeatherClient

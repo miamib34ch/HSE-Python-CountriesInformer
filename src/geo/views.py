@@ -1,6 +1,5 @@
 """Представления Django"""
 import re
-from typing import Any
 
 from django.core.cache import caches
 from django.http import JsonResponse
@@ -10,7 +9,12 @@ from rest_framework.request import Request
 from rest_framework.settings import api_settings
 
 from app.settings import CACHE_WEATHER, CACHE_CURRENCY
-from geo.serializers import CountrySerializer, CitySerializer, WeatherSerializer, CurrencyRatesSerializer
+from geo.serializers import (
+    CountrySerializer,
+    CitySerializer,
+    WeatherSerializer,
+    CurrencyRatesSerializer,
+)
 from geo.services.city import CityService
 from geo.services.country import CountryService
 from geo.services.shemas import CountryCityDTO

@@ -1,9 +1,9 @@
 from typing import Optional
 
+from django.db.models import Q
+
 from news.clients.news import NewsClient
 from news.models import News
-
-from django.db.models import Q
 
 from geo.models import Country
 from geo.services.country import CountryService
@@ -21,9 +21,7 @@ class NewsService:
         :param str country_code: ISO Alpha2 код страны
         :return:
         """
-        news = News.objects.filter(
-            Q(country__alpha2code__contains=country_code)
-        )
+        news = News.objects.filter(Q(country__alpha2code__contains=country_code))
         if not news:
             if news_data := NewsClient().get_news(country_code):
                 # Получаем коды стран

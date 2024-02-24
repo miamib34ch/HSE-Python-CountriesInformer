@@ -1,5 +1,3 @@
-from typing import Optional, Dict
-
 from django.db.models import Q, QuerySet
 
 from geo.clients.currency import CurrencyClient

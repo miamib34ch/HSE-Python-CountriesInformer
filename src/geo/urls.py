@@ -1,6 +1,13 @@
 from django.urls import path
 
-from geo.views import get_city, get_cities, get_countries, get_country, get_weather, get_currency
+from geo.views import (
+    get_city,
+    get_cities,
+    get_countries,
+    get_country,
+    get_weather,
+    get_currency,
+)
 
 urlpatterns = [
     path("city", get_cities, name="cities"),
