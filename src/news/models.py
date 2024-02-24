@@ -15,13 +15,13 @@ class News(TimeStampMixin):
     )
     source = models.CharField(max_length=50, verbose_name="Источник")
     author = models.CharField(
-        max_length=100,
+        max_length=500,
         default="",
         blank=True,
         verbose_name="Автор",
     )
     title = models.CharField(
-        max_length=255,
+        max_length=500,
         verbose_name="Заголовок",
     )
     description = models.TextField(
@@ -30,7 +30,7 @@ class News(TimeStampMixin):
         verbose_name="Описание",
     )
     url = models.CharField(
-        max_length=300,
+        max_length=500,
         default="",
         blank=True,
         verbose_name="Ссылка на источник",

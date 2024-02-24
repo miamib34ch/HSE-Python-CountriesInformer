@@ -167,9 +167,12 @@ BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}/"
 CACHE_TTL_CURRENCY_RATES: int = int(os.getenv("CACHE_TTL_CURRENCY_RATES", "86_400"))
 # время актуальности данных о погоде (в секундах), по умолчанию ~ три часа
 CACHE_TTL_WEATHER: int = int(os.getenv("CACHE_TTL_WEATHER", "10_700"))
+# время актуальности данных о новостях (в секундах), по умолчанию ~ час
+CACHE_TTL_NEWS: int = int(os.getenv("CACHE_TTL_NEWS", "3_600"))
 
 CACHE_WEATHER = "cache_weather"
 CACHE_CURRENCY = "cache_currency"
+CACHE_NEWS = "cache_news"
 CACHES = {
     # общий кэш приложения
     "default": {
@@ -192,6 +195,13 @@ CACHES = {
         "KEY_PREFIX": "currency",
         "OPTIONS": {"db": "2"},
         "TIMEOUT": CACHE_TTL_CURRENCY_RATES,
+    },
+    CACHE_NEWS: {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": BROKER_URL,
+        "KEY_PREFIX": "news",
+        "OPTIONS": {"db": "3"},
+        "TIMEOUT": CACHE_TTL_NEWS,
     },
 }
 
