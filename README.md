@@ -59,7 +59,7 @@ git clone https://github.com/miamib34ch/HSE-Python-CountriesInformer.git
     ```shell
     ./manage.py createsuperuser
     ```
-2. Go to [http://0.0.0.0:8000/admin](http://0.0.0.0:8000/admin) and manage your database.
+2. Go to [http://0.0.0.0:8020/admin](http://0.0.0.0:8020/admin) and manage your database.
 
 ## Automation commands
 
