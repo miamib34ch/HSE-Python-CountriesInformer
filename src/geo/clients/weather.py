@@ -8,6 +8,7 @@ import httpx
 
 from app.settings import REQUESTS_TIMEOUT, API_KEY_OPENWEATHER
 from base.clients.base import BaseClient
+from geo.clients.shemas import WeatherInfoDTO
 
 
 class WeatherClient(BaseClient):
@@ -27,7 +28,7 @@ class WeatherClient(BaseClient):
 
             return None
 
-    def get_weather(self, location: str) -> Optional[dict]:
+    def get_weather(self, location: str) -> Optional[WeatherInfoDTO]:
         """
         Получение данных о погоде.
 
@@ -35,6 +36,21 @@ class WeatherClient(BaseClient):
         :return:
         """
 
-        return self._request(
+        data = self._request(
             f"{self.get_base_url()}?units=metric&q={location}&appid={API_KEY_OPENWEATHER}"
+        )
+
+        return (
+            WeatherInfoDTO(
+                temp=data["main"]["temp"],
+                pressure=data["main"]["pressure"],
+                humidity=data["main"]["humidity"],
+                wind_speed=data["wind"]["speed"],
+                description=data["weather"][0]["description"],
+                visibility=data["visibility"],
+                dt=data["dt"],
+                timezone=data["timezone"] // 3600,
+            )
+            if data
+            else None
         )

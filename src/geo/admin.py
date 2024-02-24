@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from geo.models import Country, City
+from geo.models import Country, City, Weather
 
 
 @admin.register(Country)
@@ -35,6 +35,30 @@ class CityAdmin(admin.ModelAdmin):
     )
 
     search_fields = ("name", "region")
+
+    list_filter = (
+        "created_at",
+        "updated_at",
+    )
+
+
+@admin.register(Weather)
+class WeatherAdmin(admin.ModelAdmin):
+    list_display = (
+        "city",
+        "temp",
+        "pressure",
+        "humidity",
+        "wind_speed",
+        "description",
+        "visibility",
+        "dt",
+        "timezone",
+        "created_at",
+        "updated_at",
+    )
+
+    search_fields = ("city", "temp")
 
     list_filter = (
         "created_at",
