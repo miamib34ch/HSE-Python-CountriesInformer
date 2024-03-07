@@ -12,11 +12,14 @@ Install the appropriate software:
 
 ## Quick start
 1. `cp .env.sample .env`
-2. `docker compose up -d db`
-3. `docker compose run app python manage.py makemigrations`
-4. `docker compose run app python manage.py migrate`
-5. `docker compose run app python manage.py createsuperuser`
-6. `docker compose up --build`
+2. `docker compose up --build`
+3. `docker exec -it countries-informer-app bash`
+4. `python manage.py migrate --fake sessions zero`
+   `python manage.py showmigrations
+    sessions
+     [ ] 0001_initial`
+   `python manage.py migrate --fake-initial`
+
 
 ## Installation
 
